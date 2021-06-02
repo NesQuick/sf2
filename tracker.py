@@ -5,10 +5,10 @@ import datetime
 import sys, tty, termios, time, signal
 import numpy as np
 
-#latitude = 55.800195
-#longitude = 37.575226
-latitude = 33.704334  #somewhere in USA
-longitude = -111.519322
+latitude = 55.800195
+longitude = 37.575226
+# latitude = 33.704334  #somewhere in USA
+# longitude = -111.519322
 update_freq = 3   # solar coords update freq
 tolerance_angle = 0.140625 # tolerance angle between panel and sun (1 * 0.1125)
 

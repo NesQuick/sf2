@@ -21,16 +21,20 @@ TEMP_COLD_H = 0x10
 TEMP_COLD_L = 0x11
 WIND_H = 0x07
 WIND_L = 0x08
-	
-while True:
-	#print(i2cbus.read_byte_data(i2caddress, VOLTIN))
-	#h = i2cbus.read_byte_data(i2caddress, TEMP_COLD_H)
-	#l = i2cbus.read_byte_data(i2caddress, TEMP_COLD_L)
+
+
+def windSpeed():			#m/s
 	h = i2cbus.read_byte_data(i2caddress, WIND_H)
 	l = i2cbus.read_byte_data(i2caddress, WIND_L)
+	speed = (h << 8) | l
+	speed = speed/10
+	return speed
+
+def temperature(): #Celsius
+	h = i2cbus.read_byte_data(i2caddress, TEMP_COLD_H)
+	l = i2cbus.read_byte_data(i2caddress, TEMP_COLD_L)
 	tmp = (h << 8) | l
-	tmp_out = tmp/10
-	print(tmp_out)
-	time.sleep(1)
+	tmp = tmp/10
+	return tmp
 
 

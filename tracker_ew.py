@@ -5,6 +5,7 @@ import sys, tty, termios, time, signal
 from prog_control import preactivate, move_forward, move_reverse
 from rain_detection import rain
 import RPi.GPIO as io
+from wind_detection import windSpeed, temperature
 # from pysolar.solar import *
 
 # print(pytz.country_timezones('Europe'))
@@ -63,11 +64,16 @@ while True:
     date = datetime.datetime.now(datetime.timezone.utc).astimezone()
     solpos = solarposition.get_solarposition(date, lat, lon)
     rain_dtc = rain()
-    wind = "E" 
+    wind_speed = windSpeed()
+    wind = "E"
+    if angle > 90:
+        rain_angle = 135
+    else:
+        rain_angle = 90
     
     if rain_dtc == 0:
         if wind == "E":
-            rain_angle = 135
+            # rain_angle = 135
             if angle > rain_angle:
                 move_reverse(tolerance_angle * reductor_point * int((angle - rain_angle) / tolerance_angle))
                 print("moved reverse: " + str(-tolerance_angle * reductor_point * int((angle - rain_angle) / tolerance_angle)))
@@ -90,6 +96,18 @@ while True:
                 print("altitude: " + str(tracker_angle))
                 print("motor angle: " + str(motor_angle))
                 print("*****************")
+
+    elif wind_speed > 1.5:
+        move_reverse(angle * reductor_point)
+        print("moved forward: " + str(angle * reductor_point))
+        print("date: " + str(date))
+        motor_angle = motor_angle - np.round(angle, 6) * reductor_point
+        angle = np.round(angle + angle_difference, 6)
+        print("angle: " + str(angle))
+        print("altitude: " + str(tracker_angle))
+        print("motor_angle: " + str(motor_angle))
+        print("*****************")
+
     else:
         truetracking_angles = tracking.singleaxis(
             apparent_zenith=solpos['apparent_zenith'],
@@ -113,7 +131,6 @@ while True:
             print("altitude: " + str(tracker_angle))
             print("motor angle: " + str(motor_angle))
             print("*****************")
-
 
         if char == "x":
             move_reverse(angle * reductor_point)
