@@ -100,13 +100,13 @@ while True:
 
     # The "g" key will step the motor 1 rotation forwards
     if (char == "g"):
-		for y in range(0, rev_ratio):
-			for x in range(0, pulses_per_rev):
-				step_forward()
+        for y in range(0, int(rev_ratio)):
+            for x in range(0, pulses_per_rev):
+                step_forward()
 
     # The "t" key will step the motor 1 rotation in reverse
     if (char == "t"):
-        for y in range(0, rev_ratio):
+        for y in range(0, int(rev_ratio)):
             for x in range(0, pulses_per_rev):
                 step_reverse()
 

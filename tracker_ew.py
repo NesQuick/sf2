@@ -68,6 +68,8 @@ while True:
     while wind_speed is None:
         try:
             wind_speed = windSpeed()
+            print(wind_speed)
+            time.sleep(0.5)
         except:
             pass
 
@@ -77,29 +79,30 @@ while True:
         rain_angle = 90
     
     if rain_dtc == 0:
-        if angle > rain_angle:
-            move_reverse(tolerance_angle * reductor_point * int((angle - rain_angle) / tolerance_angle))
-            motor_angle = motor_angle - tolerance_angle * reductor_point * int((angle - rain_angle) / tolerance_angle)
-            angle_difference = np.round(tolerance_angle * int((angle - rain_angle) / tolerance_angle), 6)
-            angle = np.round(angle - angle_difference, 6)
-            print("moved reverse: " + str(-tolerance_angle * reductor_point * int((angle - rain_angle) / tolerance_angle)))
-            print("date: " + str(date))
-            print("angle: " + str(angle))
-            print("altitude: " + str(tracker_angle))
-            print("motor angle: " + str(motor_angle))
-            print("*****************")
+        if wind_speed <= 1.5:
+            if angle > rain_angle:
+                move_reverse(tolerance_angle * reductor_point * int((angle - rain_angle) / tolerance_angle))
+                motor_angle = motor_angle - tolerance_angle * reductor_point * int((angle - rain_angle) / tolerance_angle)
+                angle_difference = np.round(tolerance_angle * int((angle - rain_angle) / tolerance_angle), 6)
+                angle = np.round(angle - angle_difference, 6)
+                print("moved reverse: " + str(-tolerance_angle * reductor_point * int((angle - rain_angle) / tolerance_angle)))
+                print("date: " + str(date))
+                print("angle: " + str(angle))
+                print("altitude: " + str(tracker_angle))
+                print("motor angle: " + str(motor_angle))
+                print("*****************")
 
-        elif angle < rain_angle:
-            move_forward(tolerance_angle * reductor_point * int((rain_angle - angle) / tolerance_angle))
-            motor_angle = motor_angle + tolerance_angle * reductor_point * int((rain_angle - angle) / tolerance_angle)
-            angle_difference = np.round(tolerance_angle * int((rain_angle - angle) / tolerance_angle), 6)
-            angle = np.round(angle + angle_difference, 6)
-            print("moved forward: " + str(tolerance_angle * reductor_point * int((rain_angle - angle) / tolerance_angle)))
-            print("date: " + str(date))
-            print("angle: " + str(angle))
-            print("altitude: " + str(tracker_angle))
-            print("motor angle: " + str(motor_angle))
-            print("*****************")
+            elif angle < rain_angle:
+                move_forward(tolerance_angle * reductor_point * int((rain_angle - angle) / tolerance_angle))
+                motor_angle = motor_angle + tolerance_angle * reductor_point * int((rain_angle - angle) / tolerance_angle)
+                angle_difference = np.round(tolerance_angle * int((rain_angle - angle) / tolerance_angle), 6)
+                angle = np.round(angle + angle_difference, 6)
+                print("moved forward: " + str(tolerance_angle * reductor_point * int((rain_angle - angle) / tolerance_angle)))
+                print("date: " + str(date))
+                print("angle: " + str(angle))
+                print("altitude: " + str(tracker_angle))
+                print("motor angle: " + str(motor_angle))
+                print("*****************")
 
     elif wind_speed > 1.5:
         if angle > 180:
