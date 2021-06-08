@@ -73,10 +73,10 @@ while True:
         except:
             pass
 
-    if angle > 90:
-        rain_angle = 135
+    if angle > 180:
+        rain_angle = 189
     else:
-        rain_angle = 90
+        rain_angle = 171
     
     if rain_dtc == 0:
         if wind_speed <= 1.5:
